@@ -1,0 +1,11 @@
+...
+
+TASK [What is the product of our horizontal position by the depth?] ************
+ok: [localhost] => {
+    "msg": "1654760"
+}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=5001 changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+    1m20.77s real     1m00.88s user     0m37.85s system

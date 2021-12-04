@@ -1,0 +1,14 @@
+TASK [Number of windows.] ******************************************************
+ok: [localhost] => {
+    "window_count": "1998"
+}
+
+TASK [How many sums are larger than the previous sum?] *************************
+ok: [localhost] => {
+    "increases": "1781"
+}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=17759 changed=0    unreachable=0    failed=0    skipped=4210 rescued=0    ignored=0   
+
+    9m36.21s real     7m08.99s user     4m58.65s system

@@ -1,0 +1,40 @@
+---
+- name: Get the next measurement.
+  set_fact:
+    next: "{{ ansible_loop.allitems[ansible_loop.index0 + 1] }}"
+
+- name: And the one after too.
+  set_fact:
+    nextnext: "{{ ansible_loop.allitems[ansible_loop.index0 + 2] }}"
+
+- name: Calculate the current sliding window.
+  set_fact:
+    window: "{{ measurement|int + next|int + nextnext|int }}"
+
+- set_fact:
+    state: "increased"
+  when: window|int > previous|int
+
+- set_fact:
+    state: "decreased"
+  when: window|int < previous|int
+
+- set_fact:
+    state: "no change"
+  when: window|int == previous|int
+
+- name: Is this sliding window larger than the previous one?
+  set_fact:
+    increases: "{{ increases|int + 1 }}"
+  when: state == "increased"
+
+- debug:
+    msg: "{{ window_count }}: {{ window }} ({{ state }})"
+
+- name: Bump the number of sliding windows.
+  set_fact:
+    window_count: "{{ window_count|int + 1 }}"
+
+- name: Save the current sliding window.
+  set_fact:
+    previous: "{{ window }}"

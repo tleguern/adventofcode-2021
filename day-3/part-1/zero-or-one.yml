@@ -1,0 +1,14 @@
+---
+- name: Isolate the {{ column|int + 1 }}th bit from line {{ line|int + 1 }}.
+  set_fact:
+    bit: "{{ diagnostics[line|int][column|int] }}"
+
+- name: Is it zero?
+  set_fact:
+    zeroes: "{{ zeroes|int + 1 }}"
+  when: bit|int == 0
+
+- name: Is it one?
+  set_fact:
+    ones: "{{ ones|int + 1 }}"
+  when: bit|int == 1

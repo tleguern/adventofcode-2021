@@ -1,0 +1,4 @@
+---
+- name: Get closer to the ocean floor.
+  set_fact:
+    aim: "{{ aim|int + amount|int }}"

@@ -1,0 +1,9 @@
+TASK [What is the power consumption of the submarine?] *************************
+ok: [localhost] => {
+    "msg": "3374136"
+}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=36056 changed=0    unreachable=0    failed=0    skipped=12001 rescued=0    ignored=0   
+
+   18m48.28s real    11m43.82s user    12m21.46s system

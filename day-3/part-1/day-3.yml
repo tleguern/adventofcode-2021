@@ -1,0 +1,41 @@
+---
+- hosts: localhost
+  gather_facts: no
+  vars:
+    report: "{{ lookup('file', '../real.txt').split('\n') }}"
+    ones: 0
+    column: 0
+    gama: ""
+  tasks:
+    - set_fact:
+        diagnostics: "{{ diagnostics|default([]) + [ item[0] ] }}"
+      loop: "{{ report | map('slice', 1) }}"
+
+    - include_tasks: gama.yml
+
+    - name: Invert gama to get epsilon - I.
+      set_fact:
+        epsilon: "{{ gama | replace('0', '@') }}"
+
+    - name: Invert gama to get epsilon - II.
+      set_fact:
+        epsilon: "{{ epsilon | replace('1', '0') }}"
+
+    - name: Invert gama to get epsilon - III.
+      set_fact:
+        epsilon: "{{ epsilon | replace('@', '1') }}"
+
+    - name: Convert gama from binary to decimal.
+      set_fact:
+        gama: "{{ gama | int(base=2) }}"
+
+    - name: Convert epsilon from binary to decimal.
+      set_fact:
+        epsilon: "{{ epsilon | int(base=2) }}"
+
+    - debug:
+        msg: "gama = {{ gama }}, epsilon = {{ epsilon }}"
+
+    - name: What is the power consumption of the submarine?
+      debug:
+        msg: "{{ gama|int * epsilon|int }}"

@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  gather_facts: no
+  vars:
+    aim: 0
+    depth: 0
+    horizontal: 0
+    course: "{{ lookup('file', '../real.txt').split('\n') }}"
+  tasks:
+    - include_tasks: action.yml
+      loop: "{{ course }}"
+
+    - name: What is the product of our horizontal position by the depth?
+      debug:
+        msg: "{{ horizontal|int * depth|int }}"

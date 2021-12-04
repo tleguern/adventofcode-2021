@@ -1,0 +1,26 @@
+---
+- hosts: localhost
+  gather_facts: no
+  vars:
+    measurements: "{{ lookup('file', '../real.txt').split('\n') }}"
+    increases: 0
+    previous: "{{ measurements[0]|int + measurements[1]|int + measurements[2]|int }}"
+    window_count: 1
+  tasks:
+    - include_tasks: verify-measurement.yml
+      loop: "{{ measurements }}"
+      loop_control:
+        extended: yes
+        loop_var: measurement
+        index_var: idx
+      when:
+        - idx > 0
+        - idx + 2 < ansible_loop.length
+
+    - name: Number of windows.
+      debug:
+        var: window_count
+
+    - name: How many sums are larger than the previous sum?
+      debug:
+        var: increases

@@ -1,0 +1,9 @@
+TASK [How many measurements are larger than the previous measurement?] *********
+ok: [localhost] => {
+    "increases": "1752"
+}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=7750 changed=0    unreachable=0    failed=0    skipped=247  rescued=0    ignored=0   
+
+    2m46.81s real     2m09.95s user     1m12.47s system

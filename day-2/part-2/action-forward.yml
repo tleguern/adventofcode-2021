@@ -1,0 +1,8 @@
+---
+- name: Move forward.
+  set_fact:
+    horizontal: "{{ horizontal|int + amount|int }}"
+
+- name: And adjust depth according to aim.
+  set_fact:
+    depth: "{{ depth|int + aim|int * amount|int }}"

@@ -1,0 +1,12 @@
+---
+- name: Is this measurement larger than the previous one?
+  set_fact:
+    increases: "{{ increases|int + 1 }}"
+  when: measurement|int > previous|int
+
+- debug:
+    msg: "{{ measurement }} ({{ (measurement|int > previous|int)|ternary('increased','decreased') }})"
+
+- name: Save the current measurement.
+  set_fact:
+    previous: "{{ measurement }}"

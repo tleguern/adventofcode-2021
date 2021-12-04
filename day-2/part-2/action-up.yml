@@ -1,0 +1,4 @@
+---
+- name: Rise toward the sea level.
+  set_fact:
+    aim: "{{ aim|int - amount|int }}"

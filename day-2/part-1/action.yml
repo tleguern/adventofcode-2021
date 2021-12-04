@@ -1,0 +1,14 @@
+---
+- name: Identify the action.
+  set_fact:
+    action: "{{ item.split(' ')[0] }}"
+    amount: "{{ item.split(' ')[1] }}"
+
+- name: Verify the action's validity.
+  assert:
+    that:
+      - action in ["up", "down", "forward"]
+    quiet: yes
+
+- name: Execute action.
+  include_tasks: "action-{{ action }}.yml"

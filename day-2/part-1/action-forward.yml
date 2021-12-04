@@ -1,0 +1,4 @@
+---
+- name: Move forward.
+  set_fact:
+    horizontal: "{{ horizontal|int + amount|int }}"

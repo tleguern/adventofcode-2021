@@ -1,0 +1,18 @@
+---
+- hosts: localhost
+  gather_facts: no
+  vars:
+    measurements: "{{ lookup('file', '../real.txt').split('\n') }}"
+    previous: "{{ measurements[0] }}"
+    increases: 0
+  tasks:
+    - include_tasks: verify-measurement.yml
+      loop: "{{ measurements }}"
+      loop_control:
+        loop_var: measurement
+        index_var: idx
+      when: idx > 0
+
+    - name: How many measurements are larger than the previous measurement?
+      debug:
+        var: increases

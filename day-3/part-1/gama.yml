@@ -1,0 +1,19 @@
+---
+- name: Reset zeroes and ones counters.
+  set_fact:
+    zeroes: 0
+    ones: 0
+
+- include_tasks: zero-or-one.yml
+  loop: "{{ range(0, diagnostics|length) }}"
+  loop_control:
+    loop_var: line
+
+- set_fact:
+    gama: "{{ gama + (zeroes > ones)|ternary('0', '1') }}"
+
+- set_fact:
+    column: "{{ column|int + 1 }}"
+
+- include_tasks: gama.yml
+  when: "column|int < (diagnostics[0]|length)"

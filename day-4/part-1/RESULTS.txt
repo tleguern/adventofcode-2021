@@ -1,0 +1,9 @@
+TASK [What will your final score be if you choose that board?] *****************
+ok: [localhost] => {
+    "msg": "35670"
+}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=6088 changed=1    unreachable=0    failed=0    skipped=1973 rescued=1    ignored=0   
+
+    6m54.66s real     6m07.03s user     1m40.52s system

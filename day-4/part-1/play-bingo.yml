@@ -1,0 +1,15 @@
+---
+- name: Pick a new ball from the drawing pool.
+  set_fact:
+    ndraw: "{{ ndraw|int + 1 }}"
+
+- name: What is the new number?
+  debug:
+    msg: "The new number is {{ draws[ndraw|int - 1] }}"
+
+- name: Check the bingo cards for a winner.
+  include_tasks: card.yml
+  loop: "{{ bingo_cards }}"
+  loop_control:
+    loop_var: card
+    index_var: ncard

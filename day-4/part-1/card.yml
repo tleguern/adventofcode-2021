@@ -1,0 +1,16 @@
+---
+- name: Check bingo card number {{ ncard }}.
+  bingo_card:
+    card: "{{ card }}"
+    draws: "{{ draws[0:ndraw|int] }}"
+  register: result
+
+- name: Record the card number if victorious.
+  set_fact:
+    wincard: "{{ ncard }}"
+  when: result.changed
+
+- name: Stop execution if a card is victorious.
+  assert:
+    that: not result.changed
+    quiet: yes

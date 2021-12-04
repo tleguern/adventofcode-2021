@@ -1,0 +1,28 @@
+---
+- hosts: localhost
+  gather_facts: no
+  vars:
+    input: "{{ lookup('file', '../real.txt') }}"
+    draws: "{{ input.split('\n')[0].split(',') }}"
+    bingo_cards: "{{ input.split('\n\n')[1:] | map('replace', '\n', ' ') | map('split', ' ') | map('reject', 'eq', '') }}"
+    ndraw: 4
+  tasks:
+    - block:
+        - include_tasks: play-bingo.yml
+          loop: "{{ range(4, draws|length) }}"
+      rescue:
+        - name: Found a victorious card!
+          debug:
+            msg: "Card {{ wincard }}"
+
+        - name: Display the winning card.
+          debug:
+            msg: "{{ bingo_cards[wincard] }}"
+
+        - name: Calculate its points.
+          set_fact:
+            points: "{{ bingo_cards[wincard] | difference(draws[0:ndraw|int]) | map('int') | sum }}"
+
+        - name: What will your final score be if you choose that board?
+          debug:
+            msg: "{{ points|int * draws[ndraw|int - 1]|int }}"

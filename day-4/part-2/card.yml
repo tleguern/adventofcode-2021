@@ -1,0 +1,23 @@
+---
+- name: Check bingo card number {{ ncard|int + 1 }}.
+  bingo_card:
+    card: "{{ card }}"
+    draws: "{{ draws[0:ndraw|int] }}"
+  register: result
+
+- when: result.changed
+  block:
+    - debug:
+        msg: "Card {{ ncard|int + 1 }} won after {{ turns|int + 5 }} turns."
+
+    - name: Mark the card as won.
+      set_fact:
+        recorded_wins: "{{ recorded_wins + [ ncard ] }}"
+
+    - name: Record the card number and turn if victorious.
+      set_fact:
+        wincard:
+          lastdraw: "{{ draws[ndraw|int - 1] }}"
+          turn: "{{ turns|int + 5 }}"
+          card_index: "{{ ncard }}"
+          card_data: "{{ card }}"

@@ -1,0 +1,32 @@
+---
+- hosts: localhost
+  gather_facts: no
+  vars:
+    input: "{{ lookup('file', '../real.txt') }}"
+    draws: "{{ input.split('\n')[0].split(',') }}"
+    bingo_cards: "{{ input.split('\n\n')[1:] | map('replace', '\n', ' ') | map('split', ' ') | map('reject', 'eq', '') }}"
+    ndraw: 4
+    recorded_wins: []
+  tasks:
+    - block:
+        - include_tasks: play-bingo-until-the-end.yml
+          loop: "{{ range(4, draws|length) }}"
+          loop_control:
+            index_var: turns
+          when: recorded_wins|length != bingo_cards|length
+      rescue:
+        - name: Which was the last card to win?
+          debug:
+            msg: "{{ wincard.card_index|int + 1 }}"
+
+        - name: What was the last drawn number?
+          debug:
+            msg: "{{ wincard.lastdraw|int }}"
+
+        - name: Calculate its points.
+          set_fact:
+            points: "{{ bingo_cards[wincard.card_index|int] | difference(draws[0:ndraw|int]) | map('int') | sum }}"
+
+        - name: Once it wins, what would its final score be?
+          debug:
+            msg: "{{ points|int * wincard.lastdraw|int }}"

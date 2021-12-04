@@ -22,3 +22,4 @@ This is a table of my solutions for each puzzle describing the execution time an
 | 3/1        | 18m48 | 36056 |
 | 3/2        |       |       |
 | 4/1        |  6m54 | 6088  |
+| 4/2        | 18m35 | 11044 |

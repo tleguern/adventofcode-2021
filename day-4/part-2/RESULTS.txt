@@ -1,0 +1,22 @@
+TASK [Which was the last card to win?] *****************************************
+ok: [localhost] => {
+    "msg": "15"
+}
+
+TASK [What was the last drawn number?] *****************************************
+ok: [localhost] => {
+    "msg": "88"
+}
+
+TASK [Calculate its points.] ***************************************************
+ok: [localhost]
+
+TASK [Once it wins, what would its final score be?] ****************************
+ok: [localhost] => {
+    "msg": "22704"
+}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=11044 changed=100  unreachable=0    failed=0    skipped=15509 rescued=1    ignored=0   
+
+   18m35.05s real    16m10.66s user     5m04.77s system

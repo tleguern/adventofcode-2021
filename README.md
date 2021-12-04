@@ -2,12 +2,6 @@
 
 This is my experiment in solving the Advent of Code chalenge using pure Ansible.
 
-Here are the rules I impose to myself:
-
-- No custom modules ;
-- No heavy templating ;
-- Custom filters are OK.
-
 ## Stats
 
 Ansible can be very slow especially when abused for silly things.

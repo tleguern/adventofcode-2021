@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  gather_facts: no
+  vars:
+    input: "{{ lookup('file', '../real.txt').split('\n') }}"
+    max_bound: 0
+  tasks:
+    - name: Cook inputs.
+      include_tasks: input-vent.yml
+      loop: "{{ input }}"
+
+    - name: What are the bounds of the map?
+      debug:
+        msg: "[0,0] -> [{{max_bound}},{{max_bound}}]"
+
+    - set_fact:
+        dots: "{{ (('.' * max_bound|int) + '\n') * max_bound|int }}"
+
+    - debug:
+        msg: "{{ dots }}"

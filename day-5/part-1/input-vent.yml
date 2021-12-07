@@ -1,0 +1,23 @@
+---
+- name: Isolate the source and destination tuples.
+  set_fact:
+    src: "{{ item.split(' -> ')[0] }}"
+    dest: "{{ item.split(' -> ')[1] }}"
+
+- name: Isolate the x and y for source and destination.
+  set_fact:
+    src_x: "{{ src.split(',')[0] }}"
+    src_y: "{{ src.split(',')[1] }}"
+    dest_x: "{{ dest.split(',')[0] }}"
+    dest_y: "{{ dest.split(',')[1] }}"
+
+- name: ...
+  set_fact:
+    vents: "{{ vents|default([]) + [ {'src': {'x': src_x, 'y': src_y}, 'dest': {'x': dest_x, 'y': dest_y}} ] }}"
+
+- name: Find the biggest x or y.
+  set_fact:
+    max_bound: "{{ [src_x|int, src_y|int, dest_x|int, dest_y|int, max_bound|int]|max }}"
+
+#- debug:
+#    msg: "{{ src_x }}, {{ src_y }} -> {{ dest_x }}, {{ dest_y }} | {{ max_bound }}"

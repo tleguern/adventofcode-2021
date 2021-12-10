@@ -1,0 +1,22 @@
+---
+- name: Isolate the source and destination tuples.
+  set_fact:
+    src: "{{ item.split(' -> ')[0] }}"
+    dest: "{{ item.split(' -> ')[1] }}"
+
+- name: Isolate the x and y for source and destination.
+  set_fact:
+    src_x: "{{ src.split(',')[0] }}"
+    src_y: "{{ src.split(',')[1] }}"
+    dest_x: "{{ dest.split(',')[0] }}"
+    dest_y: "{{ dest.split(',')[1] }}"
+
+- name: Unroll horizontal vector.
+  set_fact:
+    vectors: "{{ vectors + [[ src_x|int ] | zip_longest(range([src_y|int, dest_y|int]|min, [src_y|int, dest_y|int]|max + 1), fillvalue=(src_x|int)) | list] }}"
+  when: src_x|int == dest_x|int
+
+- name: Unroll vertical vector.
+  set_fact:
+    vectors: "{{ vectors + [ range([src_x|int, dest_x|int]|min, [src_x|int, dest_x|int]|max + 1) | zip_longest([src_y|int], fillvalue=(src_y|int)) ] }}"
+  when: src_y|int == dest_y|int

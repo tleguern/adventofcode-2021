@@ -1,0 +1,6 @@
+---
+- debug:
+    msg: "Comparing {{ v1 }} with {{ v2 }}"
+
+- set_fact:
+    intersections: "{{ intersections|int + (v1 | intersect(v2) | length) }}"

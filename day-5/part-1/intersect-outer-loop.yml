@@ -1,0 +1,10 @@
+---
+- include_tasks: intersect-inner-loop.yml
+  loop: "{{ vectors2 }}"
+  loop_control:
+    loop_var: v2
+  when: v1 != v2
+
+- name: Remove v1 from vectors2.
+  set_fact:
+    vectors2: "{{ vectors2 | reject('eq', v1) }}"
